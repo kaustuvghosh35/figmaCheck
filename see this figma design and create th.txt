@@ -1,0 +1,4 @@
+see this figma design and create the same page for me to run on any browser, using any tech
+
+1 error fix prompt [wrote the code but did not host on a server]
+"no, i want that page to run on a server, and run in to see its working"

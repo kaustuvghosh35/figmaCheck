@@ -1,0 +1,545 @@
+Product Requirements Document (PRD): E-commerce Website
+1. Executive Summary
+This PRD outlines the development of a modern e-commerce platform designed to provide a seamless shopping experience for customers and comprehensive management tools for administrators. The platform will utilize Angular for the frontend, NestJS for the backend, and MongoDB Atlas for data storage, with mock product data seeded from the Fake Store API. The application will incorporate advanced e-commerce features, a flexible authentication system (Google OAuth and email/password), and a robust admin dashboard.
+Goals:
+
+Develop a scalable, user-friendly e-commerce platform with features comparable to leading industry players (e.g., Amazon, Shopify stores).
+Deliver a fast, intuitive shopping experience with personalized features.
+Empower administrators to manage products, orders, users, and analytics efficiently.
+Ensure secure authentication and data handling.
+Support future scalability for features like internationalization, multi-vendor support, and advanced analytics.
+
+Scope:
+
+Frontend: Angular-based single-page application (SPA) with Tailwind CSS for styling.
+Backend: RESTful API built with NestJS, handling authentication, product management, cart, orders, and admin functionalities.
+Database: MongoDB Atlas for storing users, products, orders, and cart data, with seeded mock data from Fake Store API.
+Authentication: Google OAuth 2.0 and email/password-based login/register.
+Features: Product browsing, search, filters, cart, checkout, order tracking, wishlist, reviews, personalized recommendations, and admin dashboard.
+Admin Capabilities: Product CRUD, user management, order tracking, discount management, and analytics.
+
+2. User Personas
+
+Shoppers:
+Age: 18–55, tech-savvy, seeking convenience and variety.
+Needs: Easy navigation, fast checkout, personalized recommendations, secure payments, and order tracking.
+
+
+Administrators:
+Role: Store managers or business owners.
+Needs: Tools to manage inventory, monitor sales, handle customer queries, and analyze performance metrics.
+
+
+
+3. Features and Requirements
+3.1 Frontend (Angular)
+
+Tech Stack:
+Angular 18 for component-based UI development.
+Tailwind CSS for responsive styling.
+Angular Router for navigation.
+HttpClient for API calls.
+RxJS for reactive programming.
+CDN-hosted dependencies (Angular, Tailwind) from cdn.jsdelivr.net.
+
+
+Features:
+Homepage:
+Hero banner with promotional content (carousel for featured products).
+Product categories with quick links.
+Featured products and deals of the day.
+Personalized product recommendations (based on browsing history).
+
+
+Product Listing Page:
+Grid/list view toggle.
+Advanced filters (price, category, brand, ratings, etc.).
+Sorting options (price low-high, high-low, popularity, newest).
+Infinite scroll for seamless browsing.
+Search bar with autocomplete suggestions.
+
+
+Product Detail Page:
+High-quality images (from Fake Store API) with zoom functionality.
+Product title, description, price, and stock status.
+Customer reviews and ratings (with ability to submit reviews).
+"Add to Cart" and "Add to Wishlist" buttons.
+Related products section.
+
+
+Cart:
+View items, quantities, and total price.
+Update quantities or remove items.
+Apply promo codes.
+Proceed to checkout.
+
+
+Checkout:
+Guest checkout option.
+Shipping address input with validation.
+Payment integration (mock Stripe/PayPal UI for demo purposes).
+Order summary and confirmation.
+
+
+User Profile:
+View and edit personal details (name, email, address).
+Order history with tracking links.
+Wishlist management.
+Saved payment methods (mock).
+
+
+Wishlist:
+Save products for later.
+Move items to cart or remove them.
+
+
+Order Tracking:
+Real-time order status updates (mock statuses: Processing, Shipped, Delivered).
+
+
+Responsive Design:
+Mobile-first approach, fully responsive across devices.
+
+
+Accessibility:
+ARIA labels, keyboard navigation, and screen reader support.
+
+
+
+
+
+3.2 Backend (NestJS)
+
+Tech Stack:
+NestJS with TypeScript for modular RESTful API.
+MongoDB Atlas for cloud-hosted NoSQL database.
+Mongoose for schema-based data modeling.
+Passport.js with JWT for authentication.
+Google OAuth 2.0 for social login.
+Bcrypt for password hashing.
+CORS for frontend-backend communication.
+
+
+API Endpoints (organized as NestJS modules):
+Auth Module:
+POST /auth/register: Register with email, password, and name.
+POST /auth/login: Login with email/password.
+POST /auth/google: Google OAuth login.
+GET /auth/me: Get authenticated user details.
+
+
+Products Module:
+GET /products: List products with filters, sorting, and pagination.
+GET /products/:id: Get product details.
+POST /products: Create product (admin only).
+PATCH /products/:id: Update product (admin only).
+DELETE /products/:id: Delete product (admin only).
+
+
+Cart Module:
+GET /cart: Get user’s cart.
+POST /cart: Add item to cart.
+PATCH /cart/:itemId: Update cart item quantity.
+DELETE /cart/:itemId: Remove item from cart.
+
+
+Orders Module:
+POST /orders: Create order from cart.
+GET /orders: Get user’s order history.
+GET /orders/:id: Get order details.
+PATCH /orders/:id: Update order status (admin only).
+
+
+Wishlist Module:
+GET /wishlist: Get user’s wishlist.
+POST /wishlist: Add product to wishlist.
+DELETE /wishlist/:productId: Remove product from wishlist.
+
+
+Reviews Module:
+POST /products/:id/reviews: Submit review.
+GET /products/:id/reviews: Get reviews for a product.
+
+
+Admin Module:
+GET /admin/users: List all users.
+PATCH /admin/users/:id: Update user role/status.
+GET /admin/orders: List all orders.
+POST /admin/discounts: Create discount code.
+GET /admin/analytics: Get sales and user analytics.
+
+
+
+
+
+3.3 Database (MongoDB Atlas)
+
+Schemas:
+User:{
+  name: String,
+  email: String,
+  password: String,
+  role: String (user/admin),
+  googleId: String,
+  createdAt: Date
+}
+
+
+Product:{
+  title: String,
+  description: String,
+  price: Number,
+  category: String,
+  image: String,
+  stock: Number,
+  ratings: Numberალ-2.0 license
+  ratings: Number,
+  reviews: [{ userId: ObjectId, rating: Number, comment: String, createdAt: Date }]
+}
+
+
+Cart:{
+  userId: ObjectId,
+  items: [{ productId: ObjectId, quantity: Number }]
+}
+
+
+Order:{
+  userId: ObjectId,
+  items: [{ productId: ObjectId, quantity: Number, price: Number }],
+  total: Number,
+  status: String,
+  shippingAddress: Object,
+  createdAt: Date
+}
+
+
+Wishlist:{
+  userId: ObjectId,
+  products: [ObjectId]
+}
+
+
+Discount:{
+  code: String,
+  percentage: Number,
+  expiresAt: Date
+}
+
+
+
+
+Data Seeding:
+Fetch product data from Fake Store API (https://fakestoreapi.com/products).
+Mock admin user: { name: "Admin", email: "admin@example.com", password: "hashedPassword", role: "admin" }.
+Seed 20–30 products with categories, images, and descriptions.
+Seed sample reviews for products.
+
+
+
+3.4 Authentication
+
+Google OAuth:
+Use Google OAuth 2.0 for single-sign-on.
+Store Google ID and email in User schema.
+
+
+Email/Password:
+Register with name, email, and password.
+Passwords hashed with bcrypt.
+JWT issued upon login for API authentication.
+
+
+Security:
+Rate limiting on login/register endpoints (using @nestjs/throttler).
+Input validation with @nestjs/class-validator.
+HTTPS for all API requests.
+
+
+
+3.5 Admin Features
+
+Dashboard:
+Overview of total sales, orders, and users.
+Recent orders and low-stock alerts.
+
+
+Product Management:
+Create, update, and delete products.
+Bulk upload via CSV (mock UI for demo).
+
+
+Order Management:
+View and update order statuses.
+Issue refunds (mock).
+
+
+User Management:
+View all users and their roles.
+Ban/unban users or promote to admin.
+
+
+Discount Management:
+Create and manage discount codes.
+Set expiry dates and percentage discounts.
+
+
+Analytics:
+Sales trends (daily, weekly, monthly).
+Top-selling products and categories.
+User activity (registrations, logins).
+
+
+
+3.6 Additional Features
+
+Personalized Recommendations:
+Use browsing history and purchase data to suggest products.
+Implement a simple algorithm (e.g., recommend products from same category).
+
+
+Notifications:
+Email notifications for order confirmation and status updates (mock SMTP).
+In-app notifications for promotions.
+
+
+SEO Optimization:
+Meta tags for product pages using Angular’s Meta and Title services.
+Sitemap and robots.txt for crawlers.
+
+
+Progressive Web App (PWA):
+Service worker for offline access using @angular/pwa.
+Add-to-home-screen prompt.
+
+
+Multi-language Support:
+Basic setup for English and one additional language (e.g., Spanish).
+Use ngx-translate for translations.
+
+
+
+4. Non-Functional Requirements
+
+Performance:
+Page load time < 2 seconds.
+API response time < 500ms for 90% of requests.
+
+
+Scalability:
+Backend to handle 1,000 concurrent users.
+MongoDB Atlas with auto-scaling.
+
+
+Security:
+GDPR-compliant data handling.
+Secure payment processing (mock).
+XSS and CSRF protection using Angular’s built-in sanitization.
+
+
+Availability:
+99.9% uptime for backend APIs.
+
+
+Testing:
+Unit tests for backend using Jest.
+E2E tests for frontend using Cypress.
+Manual testing for UI/UX.
+
+
+
+5. Project Structure
+ecommerce-app/
+├── frontend/
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── components/
+│   │   │   │   ├── header/
+│   │   │   │   ├── product-card/
+│   │   │   │   ├── cart/
+│   │   │   │   └── admin-dashboard/
+│   │   │   ├── pages/
+│   │   │   │   ├── home/
+│   │   │   │   ├── product-list/
+│   │   │   │   ├── product-detail/
+│   │   │   │   ├── checkout/
+│   │   │   │   └── profile/
+│   │   │   ├── services/
+│   │   │   │   ├── auth.service.ts
+│   │   │   │   ├── product.service.ts
+│   │   │   │   └── cart.service.ts
+│   │   │   ├── app.component.ts
+│   │   │   ├── app.module.ts
+│   │   │   └── app-routing.module.ts
+│   │   ├── assets/
+│   │   ├── styles.css
+│   │   └── index.html
+│   ├── angular.json
+│   └── package.json
+├── backend/
+│   ├── src/
+│   │   ├── modules/
+│   │   │   ├── auth/
+│   │   │   ├── products/
+│   │   │   ├── cart/
+│   │   │   ├── orders/
+│   │   │   ├── wishlist/
+│   │   │   └── admin/
+│   │   ├── common/
+│   │   │   ├── guards/
+│   │   │   ├── interceptors/
+│   │   │   └── filters/
+│   │   ├── app.module.ts
+│   │   ├── main.ts
+│   │   └── seed.ts
+│   ├── test/
+│   ├── .env
+│   └── package.json
+├── README.md
+└── docker-compose.yml
+
+6. Implementation Plan
+Phase 1: Setup and Core Features (4 weeks)
+
+Set up Angular frontend and NestJS backend.
+Configure MongoDB Atlas and seed mock data.
+Implement authentication (Google OAuth and email/password).
+Build homepage, product listing, and product detail pages.
+Develop cart and checkout functionality.
+
+Phase 2: Advanced Features (3 weeks)
+
+Add wishlist, reviews, and order tracking.
+Implement personalized recommendations.
+Build admin dashboard with product and order management.
+Add discount code functionality.
+
+Phase 3: Polish and Testing (2 weeks)
+
+Optimize performance (lazy loading, caching).
+Implement PWA and multi-language support.
+Conduct unit and E2E testing.
+Ensure accessibility and SEO compliance.
+
+Phase 4: Deployment (1 week)
+
+Deploy backend to a cloud provider (e.g., Render, Heroku).
+Host frontend on Vercel or Netlify.
+Set up CI/CD pipeline.
+Monitor performance and fix bugs.
+
+7. Success Metrics
+
+User Engagement:
+70% of users add items to cart within first session.
+Average session duration > 3 minutes.
+
+
+Conversion:
+5% cart-to-checkout conversion rate.
+2% of visitors complete a purchase.
+
+
+Admin Efficiency:
+Admins can update product details in < 1 minute.
+Analytics dashboard loads in < 2 seconds.
+
+
+Performance:
+Frontend achieves Lighthouse score > 90.
+Backend handles 1,000 concurrent users without crashes.
+
+
+
+8. Risks and Mitigation
+
+Risk: Slow API response times.
+Mitigation: Implement caching (Redis) and optimize MongoDB queries with indexes.
+
+
+Risk: Security vulnerabilities in authentication.
+Mitigation: Use Passport.js, JWT, and conduct security audits.
+
+
+Risk: Poor user adoption due to complex UI.
+Mitigation: Conduct user testing and simplify navigation using Angular’s component-based structure.
+
+
+Risk: Fake Store API downtime.
+Mitigation: Cache product data locally and provide fallback mock data.
+
+
+
+9. Future Enhancements
+
+Multi-vendor support for marketplace functionality.
+Integration with real payment gateways (Stripe, PayPal).
+AI-powered chat support for customers.
+Advanced analytics with machine learning for demand forecasting.
+Mobile app using Ionic with Angular.
+
+10. Mock Data Seeding Script
+Below is a sample script to seed product data from Fake Store API and create an admin user.
+
+import { getConnection } from 'typeorm';
+import axios from 'axios';
+import * as bcrypt from 'bcryptjs';
+import { User } from './modules/auth/entities/user.entity';
+import { Product } from './modules/products/entities/product.entity';
+
+async function seedDB() {  try {    const connection = getConnection();
+// Clear existing data
+await connection.getRepository(User).delete({});
+await connection.getRepository(Product).delete({});
+
+// Seed admin user
+const hashedPassword = await bcrypt.hash('admin123', 10);
+const admin = connection.getRepository(User).create({
+  name: 'Admin',
+  email: 'admin@example.com',
+  password: hashedPassword,
+  role: 'admin',
+});
+await connection.getRepository(User).save(admin);
+
+// Fetch products from Fake Store API
+const response = await axios.get('https://fakestoreapi.com/products');
+const products = response.data.map((item: any) => ({
+  title: item.title,
+  description: item.description,
+  price: item.price,
+  category: item.category,
+  image: item.image,
+  stock: Math.floor(Math.random() * 100) + 10,
+  ratings: Math.random() * 5,
+}));
+
+// Seed products
+await connection.getRepository(Product).save(products);
+
+console.log('Database seeded successfully');
+process.exit();
+
+  } catch (error) {    console.error('Error seeding database:', error);    process.exit(1);  }}
+seedDB();
+
+
+8-14 error fix prompts
+
+all the links in the footer should open their individual pages with their own contents
+also add a  caraousal in home page
+in products page, add multiple options to filter the data
+and i dont like the ui colors, fonts, and design, make them better
+
+1 error fix prompts
+
+my add to cart functionality doesnot work, make it work
+the eye button beside add to cart button doesnt work, make it work
+my product details page --- make it more attractive
+
+
+
+
+
+
+
