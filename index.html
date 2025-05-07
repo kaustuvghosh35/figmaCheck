@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clever Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h2>clever</h2>
+            </div>
+            
+            <nav class="navigation">
+                <ul>
+                    <li><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="#"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                    <li class="active"><a href="#"><i class="fas fa-comment"></i> Messages <span class="badge">6</span></a></li>
+                    <li><a href="#"><i class="fas fa-folder"></i> Collections</a></li>
+                    <li><a href="#"><i class="fas fa-users"></i> Users</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="#"><i class="fas fa-bell"></i> Notifications <span class="badge">23</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- User Profile Header -->
+            <div class="profile-header">
+                <div class="profile-info">
+                    <div class="profile-picture">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Profile Picture">
+                    </div>
+                    <div class="user-details">
+                        <h1>Marie Claire</h1>
+                        <div class="profile-actions">
+                            <button class="btn-edit"><i class="fas fa-edit"></i> Edit profile</button>
+                            <span class="verified"><i class="fas fa-check-circle"></i> Verified</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-insights"><i class="fas fa-chart-bar"></i> Insights</button>
+                    <button class="btn-primary"><i class="fas fa-plus"></i> New post</button>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Cards Row -->
+                <div class="cards-row">
+                    <!-- Current Subscription Card -->
+                    <div class="card subscription-card">
+                        <div class="card-header">
+                            <h3>Current subscription plan</h3>
+                        </div>
+                        <div class="card-body">
+                            <h2 class="plan-name">PRO</h2>
+                            <div class="plan-icon"><i class="fas fa-book"></i></div>
+                        </div>
+                        <div class="card-footer">
+                            <p>Need extra features?</p>
+                            <button class="btn-outline">Upgrade</button>
+                        </div>
+                    </div>
+
+                    <!-- Purpose Plan Card -->
+                    <div class="card purpose-card">
+                        <div class="card-header">
+                            <h3>You Purpose plan</h3>
+                            <h2>Developer</h2>
+                        </div>
+                        <div class="card-body price-display">
+                            <h2 class="price">$59</h2>
+                            <span class="price-period">per year</span>
+                        </div>
+                        <div class="card-features">
+                            <div class="feature">
+                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
+                                <span>5 users</span>
+                            </div>
+                            <div class="feature">
+                                <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
+                                <span>Dedicated support</span>
+                            </div>
+                            <div class="feature-count">
+                                <span class="user-icon"><i class="fas fa-user"></i></span>
+                                <span>3</span>
+                                <button class="btn-save">Save</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Methods Card -->
+                    <div class="card payment-card">
+                        <div class="card-header">
+                            <h3>Payment methods</h3>
+                            <button class="btn-text">Edit</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="payment-method">
+                                <div class="card-icon visa">
+                                    <i class="fab fa-cc-visa"></i>
+                                </div>
+                                <div class="card-details">
+                                    <p>Visa: <strong>5342</strong></p>
+                                    <p>Exp. date: <strong>12/24</strong></p>
+                                </div>
+                            </div>
+                            <div class="payment-method">
+                                <div class="card-icon mastercard">
+                                    <i class="fab fa-cc-mastercard"></i>
+                                </div>
+                                <div class="card-details">
+                                    <p>Mastercard: <strong>4291</strong></p>
+                                    <p>Exp. date: <strong>12/24</strong></p>
+                                </div>
+                            </div>
+                            <button class="btn-update">Update payment method</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Row -->
+                <div class="stats-row">
+                    <!-- API Usage Card -->
+                    <div class="card stats-card">
+                        <div class="card-header">
+                            <div class="stats-icon api">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3>API used</h3>
+                        </div>
+                        <div class="card-body">
+                            <h2>2.5.800 of 10.000</h2>
+                        </div>
+                    </div>
+
+                    <!-- Renewal Card -->
+                    <div class="card stats-card">
+                        <div class="card-header">
+                            <div class="stats-icon renewal">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <h3>Your plan will renew</h3>
+                        </div>
+                        <div class="card-body">
+                            <h2>12.20.24</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orders Section -->
+                <div class="orders-section">
+                    <h2>Orders</h2>
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th>INVOICE</th>
+                                <th>DATE</th>
+                                <th>AMOUNT</th>
+                                <th>PAYMENT METHOD</th>
+                                <th>STATUS</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="#">Invoice A/10</a></td>
+                                <td>Mar 15, 2020</td>
+                                <td>$143.00</td>
+                                <td><i class="fas fa-credit-card"></i> **** 4231</td>
+                                <td><span class="status paid">PAID</span></td>
+                                <td><button class="btn-more"><i class="fas fa-ellipsis-v"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">Invoice A/09</a></td>
+                                <td>Feb 15, 2020</td>
+                                <td>$439.00</td>
+                                <td><i class="fas fa-phone"></i> **** 4231</td>
+                                <td><span class="status paid">PAID</span></td>
+                                <td><button class="btn-more"><i class="fas fa-ellipsis-v"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">Invoice A/08</a></td>
+                                <td>Jan 10, 2020</td>
+                                <td>$123.00</td>
+                                <td><i class="fas fa-phone"></i> **** 4231</td>
+                                <td><span class="status paid">PAID</span></td>
+                                <td><button class="btn-more"><i class="fas fa-ellipsis-v"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">Invoice A/07</a></td>
+                                <td>Dec 15, 2019</td>
+                                <td>$49.00</td>
+                                <td><i class="fas fa-phone"></i> **** 4231</td>
+                                <td><span class="status paid">PAID</span></td>
+                                <td><button class="btn-more"><i class="fas fa-ellipsis-v"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">Invoice B/02</a></td>
+                                <td>Dec 15, 2019</td>
+                                <td>$49.00</td>
+                                <td><i class="fas fa-phone"></i> **** 4231</td>
+                                <td><span class="status paid">PAID</span></td>
+                                <td><button class="btn-more"><i class="fas fa-ellipsis-v"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">Invoice B/01</a></td>
+                                <td>Dec 01, 2019</td>
+                                <td>$150.00</td>
+                                <td><i class="fas fa-phone"></i> **** 4231</td>
+                                <td><span class="status paid">PAID</span></td>
+                                <td><button class="btn-more"><i class="fas fa-ellipsis-v"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
